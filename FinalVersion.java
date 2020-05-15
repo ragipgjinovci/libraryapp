@@ -86,9 +86,8 @@ public class FinalVersion {
               if (booksOwned.size() > 0) {
                 for (int bO = 0; bO < booksOwned.size(); bO++) {
                   if (nrB.getKey() != booksOwned.get(bO)) {
-                    System.out.println(booksOwned.get(bO));
-                    library.delete(nrB.getKey());
                     panel.remove(deleteBtn);
+                    library.delete(nrB.getKey());
                     clearRow = nrB.getKey();
                     panel.remove(bookList);
                     addBookCombo(panel);
@@ -341,7 +340,9 @@ public class FinalVersion {
 
         public void actionPerformed(ActionEvent e) {
           panel.remove(borrowBtn);
-          panel.remove(returnDate);
+          if(returnDate != null) {
+            panel.remove(returnDate);
+          }
           addBorrowBtn(panel);
         }
       }
@@ -367,35 +368,40 @@ public class FinalVersion {
       new ActionListener() {
 
         public void actionPerformed(ActionEvent e) {
-          String bookKeyS = JOptionPane.showInputDialog("Book String Key");
-          if (bookKeyS != null && !bookKeyS.isEmpty()) {
-            String bookNr = JOptionPane.showInputDialog("Book catalog number");
-            if (bookNr != null && !bookNr.isEmpty()) {
-              String bookTitle = JOptionPane.showInputDialog("Book title");
-              if (bookTitle != null && !bookTitle.isEmpty()) {
-                String bookAuthor = JOptionPane.showInputDialog("Book author");
-                if (bookAuthor != null && !bookAuthor.isEmpty()) {
-                  String bookDate = JOptionPane.showInputDialog(
-                    "Book publication date"
-                  );
-                  if (bookDate != null && !bookDate.isEmpty()) {
-                    Book newBook = new Book(
-                      new Key(bookKeyS, Double.parseDouble(bookNr)),
-                      bookAuthor,
-                      bookTitle,
-                      Integer.parseInt(bookDate)
+          try {
+            String bookKeyS = JOptionPane.showInputDialog("Book String Key");
+            if (bookKeyS != null && !bookKeyS.isEmpty()) {
+              String bookNr = JOptionPane.showInputDialog("Book catalog number");
+              if (bookNr != null && !bookNr.isEmpty()) {
+                String bookTitle = JOptionPane.showInputDialog("Book title");
+                if (bookTitle != null && !bookTitle.isEmpty()) {
+                  String bookAuthor = JOptionPane.showInputDialog("Book author");
+                  if (bookAuthor != null && !bookAuthor.isEmpty()) {
+                    String bookDate = JOptionPane.showInputDialog(
+                      "Book publication date"
                     );
-                    library.insert(newBook);
-                    books = library.getBooks();
-                    panel.remove(bookList);
-                    addBookCombo(panel);
-                    addDeleteButtons(panel);
-                    height = height + 30;
-                    panel.repaint();
+                    if (bookDate != null && !bookDate.isEmpty()) {
+                      Book newBook = new Book(
+                        new Key(bookKeyS, Double.parseDouble(bookNr)),
+                        bookAuthor,
+                        bookTitle,
+                        Integer.parseInt(bookDate)
+                      );
+                      library.insert(newBook);
+                      books = library.getBooks();
+                      panel.remove(bookList);
+                      addBookCombo(panel);
+                      addDeleteButtons(panel);
+                      height = height + 30;
+                      panel.repaint();
+                    }
                   }
                 }
               }
             }
+          }
+          catch(NumberFormatException nrError) {
+            JOptionPane.showMessageDialog(null, "Book could not be added, please check for errors.");
           }
         }
       }
@@ -405,19 +411,23 @@ public class FinalVersion {
       new ActionListener() {
 
         public void actionPerformed(ActionEvent e) {
-          String personName = JOptionPane.showInputDialog("Name");
-          if (personName != null && !personName.isEmpty()) {
-            String personAddress = JOptionPane.showInputDialog("Address");
-            if (personAddress != null && !personAddress.isEmpty()) {
-              Borrower newBorrower = new Borrower(personName, personAddress);
-              persons.insert(newBorrower);
-              borrowers = persons.getBorrowers();
-              height = height + 30;
-              addDeleteButtonsPerson(panel);
-              panel.remove(personList);
-              addComboBox(panel);
-              panel.repaint();
+          String personName = JOptionPane.showInputDialog("Name"); 
+          if (!personName.matches("[0-9]+") && personName.length() > 2) { 
+            if (personName != null && !personName.isEmpty()) {
+              String personAddress = JOptionPane.showInputDialog("Address");
+              if (personAddress != null && !personAddress.isEmpty()) {
+                Borrower newBorrower = new Borrower(personName, personAddress);
+                persons.insert(newBorrower);
+                borrowers = persons.getBorrowers();
+                height = height + 30;
+                addDeleteButtonsPerson(panel);
+                panel.remove(personList);
+                addComboBox(panel);
+                panel.repaint();
+              }
             }
+          } else {
+            JOptionPane.showMessageDialog(null, "Name contains number or it's shorter than three characters, try again!");
           }
         }
       }
