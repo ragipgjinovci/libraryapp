@@ -1,6 +1,16 @@
+/** Represents persons database
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class PersonsDatabase {
-  private Borrower[] base; // Collection of records
-  private int NOT_FOUND = -1; // int used to denote when a record not found
+  /**
+   * Collection of records
+   */
+  private Borrower[] base;
+  /**
+   * int used to denote when a record not found
+   */
+  private int NOT_FOUND = -1;
 
   /** Constructor PersonsDatabase initializes the persons database
   * @param initial_size - the size of the database */

@@ -2,13 +2,35 @@ import java.text.SimpleDateFormat; // Date formation package
 import java.util.Calendar; // Calendar to help with the date
 import java.util.GregorianCalendar; // Another calendar to help with the date
 
+/** Represents book model
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class Book {
-  private Key catalog_number; // Catalog number of the book
-  private String title; // Title of the book
-  private String author; // Author of the book
-  private int publication_date; // Publication date of the book
-  private String owned_by; // Owner id of the book
-  private String return_date; // Return date for the book when it is borrowed
+  /**
+   * Catalog number of the book
+   */
+  private Key catalog_number; 
+  /**
+   * Title of the book
+   */
+  private String title; 
+  /**
+   * Author of the book
+   */
+  private String author; 
+  /**
+   * Publication date of the book
+   */
+  private int publication_date; 
+  /**
+   * Owner id of the book
+   */
+  private String owned_by; 
+  /**
+   * Return date for the book when it is borrowed
+   */
+  private String return_date; 
 
   /** Constructor Book initializes the book class
   * @param num - catalog number for the book

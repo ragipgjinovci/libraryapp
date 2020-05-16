@@ -1,6 +1,16 @@
+/** Represents library database
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class Database {
-  private Book[] base; // Collection of records
-  private int NOT_FOUND = -1; // int used to denote when a record not found
+  /**
+   * Collection of records
+   */
+  private Book[] base; 
+  /**
+   * int used to denote when a record not found
+   */
+  private int NOT_FOUND = -1;
 
   /** Constructor Database initializes the database
   * @param initial_size - the size of the database */

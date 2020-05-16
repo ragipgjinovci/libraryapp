@@ -1,3 +1,7 @@
+/** Represents main class
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class LibraryApp {
 
   public static void main(String[] args) { // Main method that executes

@@ -10,23 +10,71 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
+/** Represents all the logic and the view.
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class Logic {
-  static int width = 900; // Width of the frame
-  static int height = 400; // Height of the frame
-  static Book[] books; // List of all books
-  static Borrower[] borrowers; // List of all borrowers
-  static Database library; // library database
-  static PersonsDatabase persons; // persons database
-  static int heightP = 0; // int height used to indicate where persons should be located
-  static JComboBox personList; // Persons Combo Box
-  static JComboBox bookList; // Books Combo Box
-  static ComboItem currentBorrower; // Current selected borrower
-  static BookCombo currentBook; // Current selected book
-  static JButton borrowBtn; // Borrow button
-  static ArrayList<String> haveBooks = new ArrayList<String>(); // List of persons that have borrowed books
-  static ArrayList<Key> booksOwned = new ArrayList<Key>(); // List of books that are borrowed
-  static JLabel returnDate; // Return date label
+  /**
+   * Width of the frame
+   */
+  static int width = 900; 
+  /**
+   * Height of the frame
+   */
+  static int height = 400; 
+  /**
+   * List of all books
+   */
+  static Book[] books; 
+  /**
+   * List of all borrowers
+   */
+  static Borrower[] borrowers;
+  /**
+   * library database
+   */
+  static Database library; 
+  /**
+   * persons database
+   */
+  static PersonsDatabase persons;
+  /**
+   * int height used to indicate where persons should be located
+   */
+  static int heightP = 0; 
+  /**
+   * Persons Combo Box
+   */
+  static JComboBox personList; 
+  /**
+   * Books Combo Box
+   */
+  static JComboBox bookList; 
+  /**
+   * Current selected borrower
+   */
+  static ComboItem currentBorrower; 
+  /**
+   * Current selected book
+   */
+  static BookCombo currentBook; 
+  /**
+   * Borrow button
+   */
+  static JButton borrowBtn; 
+  /**
+   * List of persons that have borrowed books
+   */
+  static ArrayList<String> haveBooks = new ArrayList<String>(); 
+  /**
+   * List of books that are borrowed
+   */
+  static ArrayList<Key> booksOwned = new ArrayList<Key>(); 
+  /**
+   * Return date label
+   */
+  static JLabel returnDate; 
 
   /** Constructor Logic initializes the logic class
   * @param library library database instance
@@ -468,7 +516,11 @@ public class Logic {
   }
 }
 
-// Panel class that JFrame is using
+
+/** Panel class that JFrame is using
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 class Panel extends JPanel {
   private int width; // Width of the panel
   private int height; // Height of the panel
@@ -613,9 +665,18 @@ class Panel extends JPanel {
   }
 }
 
-// Class that is used to display the combo items for the persons
+/** Class that is used to display the combo items for the persons
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 class ComboItem {
+  /**
+   * Id of the person
+   */
   private String key;
+  /**
+   * Name of the book
+   */
   private String value;
 
   public ComboItem(String key, String value) {
@@ -637,9 +698,19 @@ class ComboItem {
   }
 }
 
-// Class that is used to display the combo items for the books
+
+/** Class that is used to display the combo items for the books
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 class BookCombo {
+  /**
+   * Id of the book
+   */
   private String key;
+  /**
+   * Title of the book
+   */
   private Key value;
 
   public BookCombo(String key, Key value) {

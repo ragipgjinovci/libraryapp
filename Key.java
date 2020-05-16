@@ -1,6 +1,16 @@
+/** Represents key model
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class Key {
-  private String letter_code; // Letter code used for catalog number
-  private double number_code; // Number code used for catalog number
+  /**
+   * Letter code used for catalog number
+   */
+  private String letter_code;
+  /**
+   * Number code used for catalog number
+   */
+  private double number_code;
 
   /** Constructor Key initializes the key generator
   * @param letters - letters to be used in the catalog number

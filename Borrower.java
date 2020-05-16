@@ -1,10 +1,26 @@
 import java.util.UUID; // Package that helps with the unique id's
 
+/** Represents borrower model
+ * @author Ragip Gjinovci
+ * @version 1.0
+*/
 public class Borrower {
-  private String id; // Id of the borrower
-  private String name; // Name of the borrower
-  private String address; // Address of the borrower
-  private Key[] borrowed; // List of books that this person borrowed
+  /**
+   * Id of the borrower
+   */
+  private String id;
+  /**
+   * Name of the borrower
+   */
+  private String name;
+  /**
+   * Address of the borrower
+   */
+  private String address; 
+  /**
+   * List of books that this person borrowed
+   */
+  private Key[] borrowed;
 
   /** Constructor Borrower initializes the borrower class
   * @param name - sets the name for the borrower
