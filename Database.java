@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-
 public class Database {
-  private Book[] base;
-  private int NOT_FOUND = -1;
-  private ArrayList books;
+  private Book[] base; // Collection of records
+  private int NOT_FOUND = -1; // int used to denote when a record not found
 
+  /** Constructor Database initializes the database
+  * @param initial_size - the size of the database */
   public Database(int initial_size) {
     if (initial_size > 0) {
       base = new Book[initial_size];
@@ -12,7 +11,9 @@ public class Database {
       base = new Book[1];
     }
   }
-
+  /** findLocation is a helper method that searches base for a record
+  * whose key is k. If found, the index of the record is returned,
+  * else NOT_FOUND is returned. */
   private int findLocation(Key k) {
     int result = NOT_FOUND;
     boolean found = false;
@@ -28,6 +29,10 @@ public class Database {
     return result;
   }
 
+  /** find locates a record in the database based on a key
+  * @param k - the key of the desired record
+  * @return (the address of) the desired record;
+  * return null if record not found. */
   public Book find(Key k) {
     Book answer = null;
     int index = findLocation(k);
@@ -37,6 +42,10 @@ public class Database {
     return answer;
   }
 
+  /** insert inserts a new record into the database.
+  * @param r - the record
+  * @return true, if record added; return false if record not added because
+  * another record with the same key already exists in the database */
   public boolean insert(Book r) {
     boolean success = false;
     if (findLocation(r.getKey()) == NOT_FOUND) {
@@ -64,6 +73,10 @@ public class Database {
     return success;
   }
 
+  /** setBorrowed borrows a specific book for the given owner
+  * @param k - the key of the book to be borrowed
+  * @param owner - the id of the owner that is borrowing the book
+  * @return true, if the person borrows the book */
   public boolean setBorrowed(Key k, String owner) {
     boolean result = false;
     int index = findLocation(k);
@@ -74,6 +87,10 @@ public class Database {
     return result;
   }
 
+  /** removeBorrowed returns a specific book for the given owner
+  * @param k - the key of the book to be returned
+  * @param owner - the id of the owner that is returning the book
+  * @return true, if the person returns the book */
   public boolean removeBorrowed(Key k, String owner) {
     boolean result = false;
     int index = findLocation(k);
@@ -84,6 +101,9 @@ public class Database {
     return result;
   }
 
+  /** delete removes a record in the database based on a key
+  * @param k - the record's key (identification)
+  * @return true, if record is found and deleted; return false otherwise */
   public boolean delete(Key k) {
     boolean result = false;
     int index = findLocation(k);
@@ -94,6 +114,8 @@ public class Database {
     return result;
   }
 
+  /** getBooks returns a list of all the books on the database
+  * @return books */
   public Book[] getBooks() {
     return base;
   }

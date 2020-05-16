@@ -1,3 +1,4 @@
+// Importing the needed libraries
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,25 +11,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class FinalVersion {
-  static int width = 900;
-  static int height = 400;
-  static Book[] books;
-  static Borrower[] borrowers;
-  static Database library;
-  static PersonsDatabase persons;
-  static int heightP = 0;
-  static JComboBox personList;
-  static JComboBox bookList;
-  static Key clearRow;
-  static ComboItem currentBorrower;
-  static BookCombo currentBook;
-  static JButton borrowBtn;
-  static ArrayList<String> haveBooks = new ArrayList<String>();
-  static ArrayList<Key> booksOwned = new ArrayList<Key>();
-  static JLabel returnDate;
+public class Logic {
+  static int width = 900; // Width of the frame
+  static int height = 400; // Height of the frame
+  static Book[] books; // List of all books
+  static Borrower[] borrowers; // List of all borrowers
+  static Database library; // library database
+  static PersonsDatabase persons; // persons database
+  static int heightP = 0; // int height used to indicate where persons should be located
+  static JComboBox personList; // Persons Combo Box
+  static JComboBox bookList; // Books Combo Box
+  static ComboItem currentBorrower; // Current selected borrower
+  static BookCombo currentBook; // Current selected book
+  static JButton borrowBtn; // Borrow button
+  static ArrayList<String> haveBooks = new ArrayList<String>(); // List of persons that have borrowed books
+  static ArrayList<Key> booksOwned = new ArrayList<Key>(); // List of books that are borrowed
+  static JLabel returnDate; // Return date label
 
-  public FinalVersion(Database library, PersonsDatabase persons) {
+  /** Constructor Logic initializes the logic class
+  * @param library library database instance
+  * @param persons persons database instance
+  */
+  public Logic(Database library, PersonsDatabase persons) {
     this.library = library;
     this.persons = persons;
     this.books = library.getBooks();
@@ -36,6 +40,7 @@ public class FinalVersion {
     execute();
   }
 
+  /** execute creates a frame and adds elements to it */
   public static void execute() {
     JFrame frame = new JFrame("Library Application");
     Panel panel = new Panel(books, borrowers, width, height, library, persons);
@@ -61,8 +66,12 @@ public class FinalVersion {
     frame.setLocationRelativeTo(null);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
+    frame.setResizable(false);
   }
 
+  /** addDeleteButtons adds the delete buttons for all the books
+   * @param panel the panel instance
+   */
   public static void addDeleteButtons(JPanel panel) {
     for (int nr = 0; nr < books.length; nr++) {
       if (books[nr] != null) {
@@ -88,7 +97,6 @@ public class FinalVersion {
                   if (nrB.getKey() != booksOwned.get(bO)) {
                     panel.remove(deleteBtn);
                     library.delete(nrB.getKey());
-                    clearRow = nrB.getKey();
                     panel.remove(bookList);
                     addBookCombo(panel);
                     panel.repaint();
@@ -102,7 +110,6 @@ public class FinalVersion {
               } else {
                 library.delete(nrB.getKey());
                 panel.remove(deleteBtn);
-                clearRow = nrB.getKey();
                 panel.remove(bookList);
                 addBookCombo(panel);
                 panel.repaint();
@@ -114,6 +121,67 @@ public class FinalVersion {
     }
   }
 
+  /** addDeleteButtonsPerson adds the delete buttons for all the persons
+   * @param panel the panel instance
+   */
+  public static void addDeleteButtonsPerson(JPanel panel) {
+    for (int nr = 0; nr < borrowers.length; nr++) {
+      if (borrowers[nr] != null) {
+        final Borrower nrB = borrowers[nr];
+        if (nrB.getBooks().length == 0) {
+          haveBooks.add(nrB.getId());
+        }
+        JButton deleteBtnP = new JButton("Delete");
+        Dimension size = deleteBtnP.getPreferredSize();
+        deleteBtnP.setBounds(
+          600,
+          heightP + 45 + (nr * 30),
+          size.width + 20,
+          size.height
+        );
+        deleteBtnP.setForeground(Color.WHITE);
+        deleteBtnP.setBackground(Color.decode("#dc3545"));
+        deleteBtnP.setBorder(null);
+        deleteBtnP.setFocusPainted(false);
+        panel.add(deleteBtnP);
+        deleteBtnP.addActionListener(
+          new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+              if (haveBooks.size() > 0) {
+                for (int b = 0; b < haveBooks.size(); b++) {
+                  if (nrB.getId() != haveBooks.get(b)) {
+                    persons.delete(nrB.getId());
+                    panel.remove(deleteBtnP);
+                    panel.remove(personList);
+                    addComboBox(panel);
+                    panel.repaint();
+                  } else {
+                    JOptionPane.showMessageDialog(
+                      null,
+                      nrB.getName() +
+                      " hasn't returned some(a) book yet, therefore can not be deleted"
+                    );
+                    return;
+                  }
+                }
+              } else {
+                persons.delete(nrB.getId());
+                panel.remove(deleteBtnP);
+                panel.remove(personList);
+                addComboBox(panel);
+                panel.repaint();
+              }
+            }
+          }
+        );
+      }
+    }
+  }
+
+  /** addBorrowBtn adds the borrow button and its function
+   * @param panel the panel instance
+   */
   public static void addBorrowBtn(JPanel panel) {
     borrowBtn = new JButton("Borrow");
     Dimension size = borrowBtn.getPreferredSize();
@@ -174,6 +242,7 @@ public class FinalVersion {
                   haveBooks.remove(personId);
                   booksOwned.remove(bookId);
                   panel.remove(returnDate);
+                  panel.repaint();
                 }
               }
             }
@@ -194,6 +263,7 @@ public class FinalVersion {
               Dimension size = returnDate.getPreferredSize();
               returnDate.setBounds(750, 160, size.width + 20, size.height);
               panel.add(returnDate);
+              panel.repaint();
             }
           }
           if (!found) {
@@ -215,70 +285,18 @@ public class FinalVersion {
               Dimension size = returnDate.getPreferredSize();
               returnDate.setBounds(750, 160, size.width + 20, size.height);
               panel.add(returnDate);
+              panel.repaint();
             }
           }
           panel.repaint();
-          // Until here
-
         }
       }
     );
   }
 
-  public static void addDeleteButtonsPerson(JPanel panel) {
-    for (int nr = 0; nr < borrowers.length; nr++) {
-      if (borrowers[nr] != null) {
-        final Borrower nrB = borrowers[nr];
-        if (nrB.getBooks().length == 0) {
-          haveBooks.add(nrB.getId());
-        }
-        JButton deleteBtnP = new JButton("Delete");
-        Dimension size = deleteBtnP.getPreferredSize();
-        deleteBtnP.setBounds(
-          600,
-          heightP + 45 + (nr * 30),
-          size.width + 20,
-          size.height
-        );
-        deleteBtnP.setForeground(Color.WHITE);
-        deleteBtnP.setBackground(Color.decode("#dc3545"));
-        deleteBtnP.setBorder(null);
-        deleteBtnP.setFocusPainted(false);
-        panel.add(deleteBtnP);
-        deleteBtnP.addActionListener(
-          new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-              if (haveBooks.size() > 0) {
-                for (int b = 0; b < haveBooks.size(); b++) {
-                  if (nrB.getId() != haveBooks.get(b)) {
-                    persons.delete(nrB.getId());
-                    panel.remove(deleteBtnP);
-                    panel.remove(personList);
-                    addComboBox(panel);
-                    panel.repaint();
-                  } else {
-                    JOptionPane.showMessageDialog(
-                      null,
-                      nrB.getName() +
-                      " hasn't returned some(a) book yet, therefore can not be deleted"
-                    );
-                  }
-                }
-              } else {
-                persons.delete(nrB.getId());
-                panel.remove(deleteBtnP);
-                panel.remove(personList);
-                addComboBox(panel);
-                panel.repaint();
-              }
-            }
-          }
-        );
-      }
-    }
-  }
-
+  /** addCurrentPerson adds the label Current Person:
+   * @param panel the panel instance
+   */
   public static void addCurrentPerson(JPanel panel) {
     JLabel cPText = new JLabel("Current Person:");
     Dimension size = cPText.getPreferredSize();
@@ -286,6 +304,9 @@ public class FinalVersion {
     panel.add(cPText);
   }
 
+  /** addCurrentBook adds the label Current Book:
+   * @param panel the panel instance
+   */
   public static void addCurrentBook(JPanel panel) {
     JLabel bPText = new JLabel("Choose Book:");
     Dimension size = bPText.getPreferredSize();
@@ -293,6 +314,9 @@ public class FinalVersion {
     panel.add(bPText);
   }
 
+  /** addComboBox adds the combobox with all the persons as its items
+   * @param panel the panel instance
+   */
   public static void addComboBox(JPanel panel) {
     personList = new JComboBox();
     for (int nr = 0; nr < persons.getBorrowers().length; nr++) {
@@ -320,6 +344,9 @@ public class FinalVersion {
     );
   }
 
+  /** addBookCombo adds the combobox with all the books as its items
+   * @param panel the panel instance
+   */
   public static void addBookCombo(JPanel panel) {
     bookList = new JComboBox();
     for (int nr = 0; nr < library.getBooks().length; nr++) {
@@ -349,6 +376,9 @@ public class FinalVersion {
     );
   }
 
+  /** addButtons adds the Add a book and Add a person buttons to the panel
+   * @param panel the panel instance
+   */
   public static void addButtons(JPanel panel) {
     JButton addBook = new JButton("Add a book");
     JButton addPerson = new JButton("Add a person");
@@ -364,6 +394,7 @@ public class FinalVersion {
     addPerson.setBackground(Color.decode("#1c7430"));
     addPerson.setBorder(null);
     addPerson.setFocusPainted(false);
+    // Add a book
     addBook.addActionListener(
       new ActionListener() {
 
@@ -437,15 +468,24 @@ public class FinalVersion {
   }
 }
 
+// Panel class that JFrame is using
 class Panel extends JPanel {
-  private int width;
-  private int height;
-  private Book[] books;
-  private Borrower[] borrowers;
-  private int heightP;
-  private Database library;
-  private PersonsDatabase persons;
+  private int width; // Width of the panel
+  private int height; // Height of the panel
+  private Book[] books; // List of all books
+  private Borrower[] borrowers; // List of all borrowers(persons)
+  private int heightP; // Int used to indicate the location of the persons
+  private Database library; // library database
+  private PersonsDatabase persons; // persons database
 
+  /** Constructor Panel intializes the panel
+   * @param books list of all books
+   * @param borrowers list of all borrowers
+   * @param width width of the panel
+   * @param height height of the panel
+   * @param library library database
+   * @param persons persons database
+   */
   public Panel(
     Book[] books,
     Borrower[] borrowers,
@@ -462,6 +502,9 @@ class Panel extends JPanel {
     this.persons = persons;
   }
 
+  /** paintComponent renders all the graphic of the frame
+   * @param g the graphics instance
+   */
   public void paintComponent(Graphics g) {
     Map<?, ?> desktopHints = (Map<?, ?>) Toolkit
       .getDefaultToolkit()
@@ -523,6 +566,13 @@ class Panel extends JPanel {
     }
   }
 
+  /** addBook is a help method that adds a book to the panel
+   * @param pen the graphics instance
+   * @param title the title of the book
+   * @param author the author of the book
+   * @param date the publication date of the book
+   * @param y the vertical location that the book is going to be placed in
+   */
   public void addBook(
     Graphics pen,
     String title,
@@ -535,6 +585,13 @@ class Panel extends JPanel {
     pen.drawString(date + "", 450, y + 20);
   }
 
+  /** addPerson is a help method that adds a person to the panel
+   * @param pen the graphics instance
+   * @param name the name of the person
+   * @param address the address of the person
+   * @param booksBorrowed list of books that this person borrowed
+   * @param y the vertical location that the person is going to be placed in
+   */
   public void addPerson(
     Graphics pen,
     String name,
@@ -550,12 +607,13 @@ class Panel extends JPanel {
         try {
           title = library.find(booksBorrowed[i]).getTitle();
         } catch (NullPointerException e) {}
-        pen.drawString(title, 300 + (i * 50), y + 20);
+        pen.drawString(title, 300  + (i * 150), y + 20);
       }
     }
   }
 }
 
+// Class that is used to display the combo items for the persons
 class ComboItem {
   private String key;
   private String value;
@@ -579,6 +637,7 @@ class ComboItem {
   }
 }
 
+// Class that is used to display the combo items for the books
 class BookCombo {
   private String key;
   private Key value;

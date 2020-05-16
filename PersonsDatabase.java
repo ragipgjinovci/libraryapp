@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-
 public class PersonsDatabase {
-  private Borrower[] base;
-  private int NOT_FOUND = -1;
-  private ArrayList persons;
+  private Borrower[] base; // Collection of records
+  private int NOT_FOUND = -1; // int used to denote when a record not found
 
+  /** Constructor PersonsDatabase initializes the persons database
+  * @param initial_size - the size of the database */
   public PersonsDatabase(int initial_size) {
     if (initial_size > 0) {
       base = new Borrower[initial_size];
@@ -13,6 +12,9 @@ public class PersonsDatabase {
     }
   }
 
+  /** findLocation is a helper method that searches base for a record
+  * whose key is k. If found, the index of the record is returned,
+  * else NOT_FOUND is returned. */
   private int findLocation(String k) {
     int result = NOT_FOUND;
     boolean found = false;
@@ -28,6 +30,10 @@ public class PersonsDatabase {
     return result;
   }
 
+  /** find locates a record in the database based on a key
+  * @param k - the key of the desired record
+  * @return (the address of) the desired record;
+  * return null if record not found. */
   public Borrower find(String k) {
     Borrower answer = null;
     int index = findLocation(k);
@@ -37,6 +43,10 @@ public class PersonsDatabase {
     return answer;
   }
 
+  /** insert inserts a new record into the database.
+  * @param r - the record
+  * @return true, if record added; return false if record not added because
+  * another record with the same key already exists in the database */
   public boolean insert(Borrower r) {
     boolean success = false;
     if (findLocation(r.getId()) == NOT_FOUND) {
@@ -64,6 +74,11 @@ public class PersonsDatabase {
     return success;
   }
 
+  /** borrow borrows a book for this person
+   * @param k the key of the book to be borrowed
+   * @param id the id of the person that is borrowing the book
+   * @return true if the book is borrowed; returns false if the book couldn't be borrowed
+   */
   public boolean borrow(String k, Key id) {
     boolean result = false;
     int index = findLocation(k);
@@ -74,6 +89,10 @@ public class PersonsDatabase {
     return result;
   }
 
+  /** returnBook returns a borrowed book of this person
+   * @param k the key of the book to be returned
+   * @param id the id of the person that is returning the book
+   */
   public boolean returnBook(String k, Key id) {
     boolean result = false;
     int index = findLocation(k);
@@ -84,6 +103,9 @@ public class PersonsDatabase {
     return result;
   }
 
+  /** delete removes a record in the database based on a key
+  * @param k - the record's key (identification)
+  * @return true, if record is found and deleted; return false otherwise */
   public boolean delete(String k) {
     boolean result = false;
     int index = findLocation(k);
@@ -93,7 +115,10 @@ public class PersonsDatabase {
     }
     return result;
   }
-
+  
+  /** getBorrowers gets the list of all persons
+   * @return returns the borrowers(persons)
+   */
   public Borrower[] getBorrowers() {
     return base;
   }
