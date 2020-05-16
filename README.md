@@ -6,7 +6,7 @@ Project 8.7 - library  in the book "Programming Principles in Java: Architecture
 
 This is a simple library application that allows a user to view a list of all the books available in the database and all the persons that can borrow those books. The application also includes features such as adding a new book, adding a new person(borrower) and also deleting those instances. The main feature of this application would be the ability to borrow a certain book for a certain person and also display a return date for that book and also the ability to return the book in the first place.
 
-### Requirements
+## Requirements
 
 Tools that are required for this application to run smoothly.
 
@@ -21,6 +21,10 @@ JRE(Java Runtime Environment)
 ```
 JDK(Java Development Kit)
 ```
+
+## Usage
+
+You can simply download or clone this repository and click on the Library App.jar file to execute and view this project.
 
 ## Documentation
 
