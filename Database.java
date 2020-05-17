@@ -23,7 +23,10 @@ public class Database {
   }
   /** findLocation is a helper method that searches base for a record
   * whose key is k. If found, the index of the record is returned,
-  * else NOT_FOUND is returned. */
+  * else NOT_FOUND is returned.
+  * @param k the key to be searched
+  * @return the location the record was found; -1 otherwise
+  */
   private int findLocation(Key k) {
     int result = NOT_FOUND;
     boolean found = false;
@@ -124,7 +127,7 @@ public class Database {
     return result;
   }
 
-  /** getBooks returns a list of all the books on the database
+  /** getBooks returns the {@link Database#base}  - list of all books on the database
   * @return books */
   public Book[] getBooks() {
     return base;

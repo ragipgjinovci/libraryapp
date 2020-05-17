@@ -31,14 +31,14 @@ public class Key {
     return (s.equals(letter_code) && d == number_code);
   }
 
-  /** getLetterCode gets the letter code of the catalog number
+  /** getLetterCode gets the {@link Key#letter_code} of the catalog number
   * @return letter code
   */
   public String getLetterCode() {
     return letter_code;
   }
 
-  /** getNumberCode gets the number code of the catalog number
+  /** getNumberCode gets the {@link Key#number_code} of the catalog number
   * @return number code
   */
   public double getNumberCode() {

@@ -24,7 +24,10 @@ public class PersonsDatabase {
 
   /** findLocation is a helper method that searches base for a record
   * whose key is k. If found, the index of the record is returned,
-  * else NOT_FOUND is returned. */
+  * else NOT_FOUND is returned.
+  * @param k the key that will be searched
+  * @return the location if its found; -1 otherwise
+  */
   private int findLocation(String k) {
     int result = NOT_FOUND;
     boolean found = false;
@@ -102,6 +105,7 @@ public class PersonsDatabase {
   /** returnBook returns a borrowed book of this person
    * @param k the key of the book to be returned
    * @param id the id of the person that is returning the book
+   * @return true if returned; false otherwise
    */
   public boolean returnBook(String k, Key id) {
     boolean result = false;
@@ -126,7 +130,7 @@ public class PersonsDatabase {
     return result;
   }
   
-  /** getBorrowers gets the list of all persons
+  /** getBorrowers gets the {@link PersonsDatabase#base} - list of all persons
    * @return returns the borrowers(persons)
    */
   public Borrower[] getBorrowers() {

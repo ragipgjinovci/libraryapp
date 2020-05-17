@@ -33,19 +33,19 @@ public class Borrower {
     borrowed = new Key[6];
   }
 
-  /** getId gets the id of the borrower
+  /** getId gets the {@link Borrower#id} of the borrower
   * @return id of the borrower */
   public String getId() {
     return id;
   }
 
-  /** getName gets the name of the borrower
+  /** getName gets the {@link Borrower#name} of the borrower
   * @return name of the borrower */
   public String getName() {
     return name;
   }
 
-  /** getAddress gets the address of the borrower
+  /** getAddress gets the {@link Borrower#address} of the borrower
   * @return address of the borrower */
   public String getAddress() {
     return address;
@@ -72,7 +72,7 @@ public class Borrower {
       }
     }
   }
-  /** getBooks gets all the books borrowed of this person
+  /** getBooks gets all the books {@link Borrower#borrowed} of this person
   * @return borrowed books of this person */
   public Key[] getBooks() {
     return borrowed;

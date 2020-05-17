@@ -45,28 +45,28 @@ public class Book {
     publication_date = date;
   }
 
-  /** getKey gets the catalog number of the book
+  /** getKey gets the {@link Book#catalog_number} of the book
    * @return returns the catalog number
    */
   public Key getKey() {
     return catalog_number;
   }
 
-  /** getTitle gets the title of the book
+  /** getTitle gets the {@link Book#title} of the book
    * @return returns the title
    */
   public String getTitle() {
     return title;
   }
 
-  /** getAuthor gets the author of the book
+  /** getAuthor gets the {@link Book#author} of the book
    * @return returns the author
    */
   public String getAuthor() {
     return author;
   }
 
-  /** getDate gets the publication date of the book
+  /** getDate gets the {@link Book#publication_date} of the book
    * @return returns the publication date
    */
   public int getDate() {
@@ -84,14 +84,14 @@ public class Book {
     return_date = sdf.format(calendar.getTime());
   }
 
-  /** getOwner gets the owner of this book
+  /** getOwner gets the {@link Book#owned_by} - owner of this book
    * @return returns the owner
    */
   public String getOwner() {
     return owned_by;
   }
 
-  /** getReturn gets the return date for this book
+  /** getReturn gets the {@link Book#return_date} for this book
    * @return returns the return date
    */
   public String getReturn() {
